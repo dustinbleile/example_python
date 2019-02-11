@@ -8,8 +8,12 @@ import logging
 
 SIMPLE_FORMAT= '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
+
+logging.info('this first info is not printed.')
+logging.warning('No logging config called yet')
+
 logging.basicConfig(level=logging.INFO, format=SIMPLE_FORMAT)
-                    #format="%(level)-8s%(name)s: %(message)s")
+                
 logger = logging.getLogger(__name__)
 print('Found main.py')
 
@@ -20,8 +24,15 @@ def main():
     print('In the main function at the moment.')
     logger.info('In the main function at the moment.')
 
-    logger.setLevel(logging.DEBUG)
+    # logger.setLevel(logging.DEBUG)
     logger.debug(logging.basicConfig.__doc__)
+    logging.info('default logging')
+
+    import style_app
+    import style_app.style
+    import style_app.style.main
+    #style_app.main()
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
