@@ -12,7 +12,7 @@ logging.info('this first info is not printed.')
 logging.warning('No logging config called yet')
 
 logging.basicConfig(level=logging.INFO, format=SIMPLE_FORMAT)
-                
+
 logger = logging.getLogger(__name__)
 print('Found main.py')
 
@@ -30,6 +30,9 @@ def main():
     from . import style_app
     from .style_app import style
 
+    style_app.style.main()
+
+    style_app.style.logging_setup()
     style_app.style.main()
 
 

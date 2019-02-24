@@ -31,7 +31,7 @@ except ValueError:  # just always adding packages to path seems more reliable
     example_dir = os.path.dirname(style_app_dir)
     print('adding {} to path'.format(example_dir))
     sys.path.insert(0, example_dir)  # insert at begining to get checked first
-    
+
     from python_example_logging import constants
     from python_example_logging import style_app
 
@@ -78,6 +78,7 @@ def logging_setup():
         formatter = colorlog.ColoredFormatter(
             constants.COLOR_FORMAT,
             datefmt=constants.DATEFMT,
+            log_colors=constants.CUSTOM_COLORS,
             )
         ch = colorlog.StreamHandler()
     else:
@@ -91,6 +92,8 @@ def logging_setup():
 
 if __name__ == "__main__":
     try:
+        # Changing the logger has a big effect.
+        logger = logging.getLogger('python_example_logging.style_app')
         logging_setup()
         main()
     except Exception as err:
