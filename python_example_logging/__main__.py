@@ -6,8 +6,7 @@ Calling this directory with python will execute this script.
 """
 import logging
 
-SIMPLE_FORMAT= '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-
+from .constants import SIMPLE_FORMAT
 
 logging.info('this first info is not printed.')
 logging.warning('No logging config called yet')
@@ -28,10 +27,10 @@ def main():
     logger.debug(logging.basicConfig.__doc__)
     logging.info('default logging')
 
-    import style_app
-    import style_app.style
-    import style_app.style.main
-    #style_app.main()
+    from . import style_app
+    from .style_app import style
+
+    style_app.style.main()
 
 
 if __name__ == "__main__":
