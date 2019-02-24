@@ -42,6 +42,15 @@ logger = logging.getLogger(__name__)
 def main():
 
     logger.info('style_app: %s', [i for i in dir(style_app) if not i.startswith('__')])
+    print('logging style test')
+    msg = "sytle::main - test msg"
+    logger.setLevel(logging.DEBUG)
+    logger.debug(msg)
+    logger.info(msg)
+    logger.warning(msg)
+    logger.error(msg)
+    logger.critical(msg)
+
 
     print("Trying down_folder")
     logger.info("Starting down_test")
@@ -68,7 +77,8 @@ def logging_setup():
     if COLORLOG:
         formatter = colorlog.ColoredFormatter(
             constants.COLOR_FORMAT,
-            datefmt=constants.DATEFMT)
+            datefmt=constants.DATEFMT,
+            )
         ch = colorlog.StreamHandler()
     else:
         formatter = logging.Formatter(
