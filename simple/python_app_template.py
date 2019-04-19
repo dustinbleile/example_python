@@ -107,7 +107,7 @@ if __name__ == '__main__':
     elif args.quiet:
         logging_basic_config(level=logging.WARNING, filename=args.logfile)
     else:
-        logging_basic_config(level=logging.WARNING, filename=args.logfile)
+        logging_basic_config(level=logging.INFO, filename=args.logfile)
 
     if args.debug:
         logging.debug("Verbose logging set")
