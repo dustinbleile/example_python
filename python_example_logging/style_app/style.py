@@ -5,6 +5,7 @@ Try to use basic PEP style module methods
 # standard imports
 import argparse
 import logging
+import logging.config
 
 # non-standard
 try:
@@ -35,12 +36,66 @@ except ValueError:  # just always adding packages to path seems more reliable
     from python_example_logging import constants
     from python_example_logging import style_app
 
+LOGGING_CONFIG = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': constants.SIMPLE_FORMAT,
+            # 'datefmt': constants.DATEFMT,
+        },
+        'color': {
+            '()': 'colorlog.ColoredFormatter',  # colored output
+            'format': constants.COLOR_FORMAT,
+            'datefmt': constants.DATEFMT,
+            }
+    },
+    'handlers': {
+        'default': {
+            'level': 'INFO',
+            'formatter': 'standard',
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://sys.stdout',  # Default is stderr
+        },
+        'color': {
+            'level': 'INFO',
+            'formatter': 'color',
+            'class': 'colorlog.StreamHandler',
+            'stream': 'ext://sys.stdout',  # Default is stderr
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'test.log',
+            'formatter': 'standard',
+        }
+    },
+    'loggers': {
+        '': {  # root logger
+            'handlers': ['default'],
+            'level': 'INFO',
+            'propagate': True
+        },
+        __name__: {
+            'handlers': ['color'],
+            'level': 'DEBUG',
+            'propagate': False  # Do not keep propagating up to root
+        },
+        'python_example_logging': {
+            'handlers': ['color'],
+            'level': 'DEBUG',
+            'propagate': False  # Do not keep propagating up to root
+        },
+    }
+}
 
 logger = logging.getLogger(__name__)
 
 
 def main():
+    logging.config.dictConfig(LOGGING_CONFIG)
 
+    logging.info('root logger info')
     logger.info('style_app: %s', [i for i in dir(style_app) if not i.startswith('__')])
     print('logging style test')
     msg = "sytle::main - test msg"
